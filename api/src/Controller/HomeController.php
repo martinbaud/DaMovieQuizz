@@ -8,11 +8,23 @@ use Symfony\Component\HttpFoundation\Response;
 
 class HomeController
 {
+  private $hash = "Zd9h5&TGL<U:Y6y";
   /**
-   * @Route("/game/", methods={"GET"})
+   * @Route("/", name="home")
    */
-  public function index(): Response
+   public function index(): Response {
+     return new Response(md5($this->hash));
+   }
+
+  /**
+   * @Route("/game/{hash}/start")
+   */
+  public function game($hash): Response
   {
+
+    if ($hash != md5($this->hash)) {
+      return new Response("The hash question is not valid");
+    }
 
     $key = "7ea5f490261a949e52930517e1b4657c";
     $lang = "en-US";
